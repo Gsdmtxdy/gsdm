@@ -1,0 +1,36 @@
+package com.imti.dbUtil;
+
+import java.sql.*;
+
+public class DbUtil {
+    private static String Driver="oracle.jdbc.driver.OracleDriver";
+    private static String JDBCurl="jdbc:oracle:thin:@localhost:1521:orcl";
+    private static String userName="scott";
+    private static String passWord="123456";
+
+    public static Connection getconn(){
+        Connection conn=null;
+        try {
+            Class.forName(Driver);
+            conn=DriverManager.getConnection(JDBCurl,userName,passWord);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
+    public void closeConn(PreparedStatement pstm,Connection conn){
+        if (pstm!=null){
+            try {
+                pstm.close();
+                if (conn!=null){
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
